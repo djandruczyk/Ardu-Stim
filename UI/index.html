@@ -36,7 +36,7 @@
 								<select name="ports" class="select" id="portsSelect" size="10" style="width:250px"></select>
 								<ul class="actions">
 										<li><input type='button' value="Refresh" onclick="refreshSerialPorts();" /></li>
-                    <li><input type='button' value="Connect" id="btnConnect" onclick="openSerialPort();" /></li>
+                    <li><input id='connectButton' type='button' value="Connect" id="btnConnect" onclick="openSerialPort();" /></li>
                     <li><input type='button' value="Upload Firmware" id="btnUploadFW" onclick="uploadFW();" /></li>
                     <li><span class="icon major" id="progressSpinner"></span></li>
                     <li><span id="burnPercent"></span></li>

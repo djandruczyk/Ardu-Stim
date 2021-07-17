@@ -72,6 +72,15 @@ function refreshSerialPorts()
 }
 
 
+function closeSerialPort()
+{
+    var e = document.getElementById('portsSelect');
+    console.log("Closing serial port: ", e.options[e.selectedIndex].value);
+	port.close();
+	document.getElementById('connectButton').value = 'Connect';
+	document.getElementById('connectButton').onclick = openSerialPort;
+}
+
 function openSerialPort()
 {
     var e = document.getElementById('portsSelect');
@@ -125,6 +134,8 @@ function onSerialConnect()
   //Activate the links
   document.getElementById("link_live").href = "#live";
   document.getElementById("link_config").href = "#config";
+  document.getElementById('connectButton').value = "Disconnect";
+  document.getElementById('connectButton').onclick = closeSerialPort;
 }
 
 
