@@ -422,14 +422,7 @@ void reset_new_OCR1A(uint32_t new_rpm)
   uint8_t bitshift;
   uint8_t tmp_prescaler_bits;
   tmp = (uint32_t)(8000000.0/(Wheels[selected_wheel].rpm_scaler * (float)(new_rpm < 10 ? 10:new_rpm)));
-/*  mySUI.print(F("new_OCR1a: "));
-  mySUI.println(tmpl);
-  */
   get_prescaler_bits(&tmp,&tmp_prescaler_bits,&bitshift);
-  /*
-  mySUI.print(F("new_OCR1a: "));
-  mySUI.println(tmp2);
-  */
   new_OCR1A = (uint16_t)(tmp >> bitshift); 
   prescaler_bits = tmp_prescaler_bits;
   reset_prescaler = true; 
@@ -519,11 +512,6 @@ sweep_step *build_sweep_steps(uint32_t *low_rpm_tcnt, uint32_t *high_rpm_tcnt, u
   uint8_t prescaler_bits;
   uint8_t bitshift;
   uint32_t tmp = *low_rpm_tcnt;
-  /* DEBUG
-  mySUI.print(*low_rpm_tcnt);
-  mySUI.print(F("<->"));
-  mySUI.println(*high_rpm_tcnt);
-   */
 
   steps = (sweep_step *)malloc(sizeof(sweep_step)*(*total_stages));
 
@@ -544,11 +532,6 @@ sweep_step *build_sweep_steps(uint32_t *low_rpm_tcnt, uint32_t *high_rpm_tcnt, u
     else
       steps[i].ending_ocr = (uint16_t)(tmp >> (bitshift + 1)); // Half the begin value
     tmp = tmp >> 1; /* Divide by 2 */
-    /* DEBUG
-    mySUI.print(steps[i].beginning_ocr);
-    mySUI.print(F("<->"));
-    mySUI.println(steps[i].ending_ocr);
-    */
   }
   return steps;
 }

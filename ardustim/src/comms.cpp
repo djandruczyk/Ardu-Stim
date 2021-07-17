@@ -261,7 +261,6 @@ void select_previous_wheel_cb()
 void setRPM(uint32_t newRPM)
 {
   if (newRPM < 10)  {
-    //mySUI.returnError("Invalid RPM, RPM too low");
     return;
   }
   /* Spinlock */
@@ -283,19 +282,14 @@ void setRPM(uint32_t newRPM)
  */
 void reverse_wheel_direction_cb()
 {
-  /*
-    mySUI.print_P(wheel_direction_colon_space);
     if (normal)
     {
       normal = false;
-      mySUI.println_P(reversed_);
     }
     else
     {
       normal = true;
-      mySUI.println_P(normal_);
     }
-    */
 }
 
 
@@ -362,12 +356,9 @@ void compute_sweep_stages(uint16_t *tmp_low_rpm, uint16_t *tmp_high_rpm)
   // Get number of frequency doublings, rounding 
 #ifdef MORE_LINEAR_SWEEP
   total_stages = (uint8_t)ceil(log((float)(*tmp_high_rpm)/(float)(*tmp_low_rpm))/LOG_2);
-  //mySUI.print(F("MLS total stages: "));
 #else
   total_stages = (uint8_t)ceil(log((float)(*tmp_high_rpm)/(float)(*tmp_low_rpm))/(2*LOG_2));
-  //mySUI.print(F("total stages: "));
 #endif
-  //mySUI.println(total_stages);
   if (SweepSteps)
     free(SweepSteps);
   j = 0;
@@ -398,30 +389,6 @@ void compute_sweep_stages(uint16_t *tmp_low_rpm, uint16_t *tmp_high_rpm)
         SweepSteps[i+j].tcnt_per_isr = (uint16_t)per_isr_tcnt_change;
         SweepSteps[i+j].remainder_per_isr = scaled_remainder;
 
-        /* Debugging
-           mySUI.print(F("sweep step: "));
-           mySUI.println(i+j);
-           mySUI.print(F("steps: "));
-           mySUI.println(steps);
-           mySUI.print(F("Beginning tcnt: "));
-           mySUI.print(SweepSteps[i+j].beginning_ocr);
-           mySUI.print(F(" for RPM: "));
-           mySUI.println(this_step_low_rpm);
-           mySUI.print(F("ending tcnt: "));
-           mySUI.print(SweepSteps[i+j].ending_ocr);
-           mySUI.print(F(" for RPM: "));
-           mySUI.println(this_step_high_rpm);
-           mySUI.print(F("prescaler bits: "));
-           mySUI.println(SweepSteps[i+j].prescaler_bits);
-           mySUI.print(F("tcnt_per_isr: "));
-           mySUI.println(SweepSteps[i+j].tcnt_per_isr);
-           mySUI.print(F("scaled remainder_per_isr: "));
-           mySUI.println(SweepSteps[i+j].remainder_per_isr);
-           mySUI.print(F("FP TCNT per ISR: "));
-           mySUI.println(per_isr_tcnt_change,6);
-           mySUI.print(F("End of step: "));
-           mySUI.println(i+j);
-           */
 #ifndef MORE_LINEAR_SWEEP
       }
 #else
@@ -429,10 +396,6 @@ void compute_sweep_stages(uint16_t *tmp_low_rpm, uint16_t *tmp_high_rpm)
   }
 #endif
   total_sweep_stages = total_stages;
-  /*
-  mySUI.print(F("Total sweep stages: "));
-  mySUI.println(total_sweep_stages);
-  */
   /* Reset params for Timer2 ISR */
   sweep_stage = 0;
   sweep_direction = ASCENDING;
